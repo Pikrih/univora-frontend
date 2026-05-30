@@ -37,7 +37,7 @@ export default function Favorites() {
   const fetchFavorites = useCallback(async () => {
     if (!user?.id) { setLoading(false); return; }
     try {
-      const res = await axios.get(`http://localhost:5000/api/favorites?user_id=${user.id}`);
+      const res = await axios.get(`https://univora-backend-production.up.railway.app/api/favorites?user_id=${user.id}`);
       if (res.data.success) setFavorites(res.data.data);
     } catch { showToast('Gagal memuat favorit. Cek koneksi.', 'error'); }
     finally { setLoading(false); }
@@ -66,7 +66,7 @@ export default function Favorites() {
     e.stopPropagation();
     setRemoving(place.id);
     try {
-      const res = await axios.post('http://localhost:5000/api/favorites/toggle', {
+      const res = await axios.post('https://univora-backend-production.up.railway.app/api/favorites/toggle', {
         user_id: user.id, tempat_makan_id: place.id,
       });
       if (res.data.success && !res.data.is_favorit) {

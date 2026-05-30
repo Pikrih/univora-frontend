@@ -153,7 +153,7 @@ export default function FoodDetail() {
   // Fetch detail tempat makan
   const fetchDetail = async () => {
     try {
-      const res = await axios.get(`http://localhost:5000/api/places/${placeId}`);
+      const res = await axios.get(`https://univora-backend-production.up.railway.app/api/places/${placeId}`);
       if (res.data.success) setDetailData(res.data.data);
       else setError('Gagal memuat detail tempat makan.');
     } catch { setError('Koneksi ke server gagal.'); }
@@ -164,7 +164,7 @@ export default function FoodDetail() {
   const fetchGaleri = async () => {
     if (!placeId) return;
     try {
-      const res = await axios.get(`http://localhost:5000/api/places/${placeId}/photos`);
+      const res = await axios.get(`https://univora-backend-production.up.railway.app/api/places/${placeId}/photos`);
       if (res.data.success) setFotoGaleri(res.data.data);
     } catch { /* silent */ }
   };
@@ -173,7 +173,7 @@ export default function FoodDetail() {
   const fetchLocation = async () => {
     if (!placeId) return;
     try {
-      const res = await axios.get(`http://localhost:5000/api/places/${placeId}/location`);
+      const res = await axios.get(`https://univora-backend-production.up.railway.app/api/places/${placeId}/location`);
       if (res.data.success) setPlaceLocation(res.data.data);
     } catch { /* silent */ }
   };
@@ -182,7 +182,7 @@ export default function FoodDetail() {
   const fetchFavoritStatus = async () => {
     if (!user?.id || !placeIdInt || isNaN(placeIdInt)) return;
     try {
-      const res = await axios.get(`http://localhost:5000/api/favorites/check?user_id=${user.id}&tempat_makan_id=${placeIdInt}`);
+      const res = await axios.get(`https://univora-backend-production.up.railway.app/api/favorites/check?user_id=${user.id}&tempat_makan_id=${placeIdInt}`);
       if (res.data.success) setIsFavorit(res.data.is_favorit);
     } catch { /* silent */ }
   };
@@ -203,7 +203,7 @@ export default function FoodDetail() {
     }
     setFavoritLoading(true);
     try {
-      const res = await axios.post('http://localhost:5000/api/favorites/toggle', {
+      const res = await axios.post('https://univora-backend-production.up.railway.app/api/favorites/toggle', {
         user_id:         user.id,
         tempat_makan_id: placeIdInt,
       });
@@ -277,7 +277,7 @@ export default function FoodDetail() {
     fd.append('tipe',    uploadTipe);
     fd.append('user_id', user?.id ?? 1);
     try {
-      const res = await axios.post(`http://localhost:5000/api/places/${placeId}/photos`, fd);
+      const res = await axios.post(`https://univora-backend-production.up.railway.app/api/places/${placeId}/photos`, fd);
       if (res.data.success) {
         alert(res.data.message);
         setShowUploadModal(false);

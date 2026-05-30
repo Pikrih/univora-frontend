@@ -245,7 +245,7 @@ function CoordModal({ place, onClose, onSaved }) {
     }
     setSaving(true);
     try {
-      const res = await axios.put(`http://localhost:5000/api/places/${place.id}/location`, {
+      const res = await axios.put(`https://univora-backend-production.up.railway.app/api/places/${place.id}/location`, {
         latitude: parseFloat(lat), longitude: parseFloat(lng),
       });
       if (res.data.success) {
@@ -464,12 +464,12 @@ export default function AdminDashboard() {
     setLoading(true);
     try {
       const [rPlaces, rReviews, rCities, rUnis, rAllPlaces, rUsers] = await Promise.all([
-        axios.get('http://localhost:5000/api/admin/places/pending'),
-        axios.get('http://localhost:5000/api/admin/reviews/pending'),
-        axios.get('http://localhost:5000/api/admin/cities'),
-        axios.get('http://localhost:5000/api/admin/universities'),
-        axios.get('http://localhost:5000/api/admin/places/all'),
-        axios.get('http://localhost:5000/api/admin/users'),
+        axios.get('https://univora-backend-production.up.railway.app/api/admin/places/pending'),
+        axios.get('https://univora-backend-production.up.railway.app/api/admin/reviews/pending'),
+        axios.get('https://univora-backend-production.up.railway.app/api/admin/cities'),
+        axios.get('https://univora-backend-production.up.railway.app/api/admin/universities'),
+        axios.get('https://univora-backend-production.up.railway.app/api/admin/places/all'),
+        axios.get('https://univora-backend-production.up.railway.app/api/admin/users'),
       ]);
       if (rPlaces.data.success)    setPendingPlaces(rPlaces.data.data);
       if (rReviews.data.success)   setPendingReviews(rReviews.data.data);
@@ -488,7 +488,7 @@ export default function AdminDashboard() {
   const fetchStats = useCallback(async () => {
     setStatsLoading(true);
     try {
-      const res = await axios.get('http://localhost:5000/api/admin/stats');
+      const res = await axios.get('https://univora-backend-production.up.railway.app/api/admin/stats');
       if (res.data.success) {
         setStats(res.data.data);
         setLastRefresh(new Date());
@@ -508,7 +508,7 @@ export default function AdminDashboard() {
   // ── Moderasi tempat makan ───────────────────────────────────────────────────
   const handlePlaceAction = async (id, status) => {
     try {
-      const res = await axios.put(`http://localhost:5000/api/admin/places/${id}/status`, { status });
+      const res = await axios.put(`https://univora-backend-production.up.railway.app/api/admin/places/${id}/status`, { status });
       if (res.data.success) { alert(res.data.message); fetchAll(); }
     } catch { alert('Gagal memproses verifikasi tempat makan.'); }
   };
@@ -516,7 +516,7 @@ export default function AdminDashboard() {
   // ── Moderasi ulasan ─────────────────────────────────────────────────────────
   const handleReviewAction = async (id, status) => {
     try {
-      const res = await axios.put(`http://localhost:5000/api/admin/reviews/${id}/status`, { status });
+      const res = await axios.put(`https://univora-backend-production.up.railway.app/api/admin/reviews/${id}/status`, { status });
       if (res.data.success) { alert(res.data.message); fetchAll(); }
     } catch { alert('Gagal memproses moderasi ulasan.'); }
   };
@@ -530,7 +530,7 @@ export default function AdminDashboard() {
         if (!form.nama_kota.trim()) { alert('Nama kota wajib diisi.'); return; }
         setAddLoading(true);
         try {
-          const res = await axios.post('http://localhost:5000/api/admin/cities', { nama_kota: form.nama_kota });
+          const res = await axios.post('https://univora-backend-production.up.railway.app/api/admin/cities', { nama_kota: form.nama_kota });
           if (res.data.success) { alert(res.data.message); setAddModal(null); fetchAll(); }
         } catch (err) {
           alert(err.response?.data?.message || 'Gagal menambah kota.');
@@ -546,7 +546,7 @@ export default function AdminDashboard() {
       onConfirm: async () => {
         setConfirmModal(null);
         try {
-          const res = await axios.delete(`http://localhost:5000/api/admin/cities/${city.id}`);
+          const res = await axios.delete(`https://univora-backend-production.up.railway.app/api/admin/cities/${city.id}`);
           if (res.data.success) { alert(res.data.message); fetchAll(); }
         } catch (err) {
           alert(err.response?.data?.message || 'Gagal menghapus kota.');
@@ -573,7 +573,7 @@ export default function AdminDashboard() {
         if (!form.nama_universitas.trim()) { alert('Nama universitas wajib diisi.'); return; }
         setAddLoading(true);
         try {
-          const res = await axios.post('http://localhost:5000/api/admin/universities', {
+          const res = await axios.post('https://univora-backend-production.up.railway.app/api/admin/universities', {
             city_id:          form.city_id,
             nama_universitas: form.nama_universitas,
             latitude:         form.latitude  || 0,
@@ -594,7 +594,7 @@ export default function AdminDashboard() {
       onConfirm: async () => {
         setConfirmModal(null);
         try {
-          const res = await axios.delete(`http://localhost:5000/api/admin/universities/${uni.id}`);
+          const res = await axios.delete(`https://univora-backend-production.up.railway.app/api/admin/universities/${uni.id}`);
           if (res.data.success) { alert(res.data.message); fetchAll(); }
         } catch (err) {
           alert(err.response?.data?.message || 'Gagal menghapus kampus.');
@@ -631,7 +631,7 @@ export default function AdminDashboard() {
     }
     setEditLoading(true);
     try {
-      const res = await axios.put(`http://localhost:5000/api/admin/places/${editModal.id}`, editForm);
+      const res = await axios.put(`https://univora-backend-production.up.railway.app/api/admin/places/${editModal.id}`, editForm);
       if (res.data.success) {
         alert(res.data.message);
         setEditModal(null);
@@ -649,7 +649,7 @@ export default function AdminDashboard() {
       onConfirm: async () => {
         setConfirmModal(null);
         try {
-          const res = await axios.delete(`http://localhost:5000/api/admin/places/${place.id}`);
+          const res = await axios.delete(`https://univora-backend-production.up.railway.app/api/admin/places/${place.id}`);
           if (res.data.success) { alert(res.data.message); fetchAll(); }
         } catch (err) {
           alert(err.response?.data?.message || 'Gagal menghapus tempat makan.');
@@ -668,7 +668,7 @@ export default function AdminDashboard() {
   // ── USER: Blokir / Aktifkan ────────────────────────────────────────────────
   const handleUserStatus = async (user, newStatus) => {
     try {
-      const res = await axios.put(`http://localhost:5000/api/admin/users/${user.id}/status`, { status: newStatus });
+      const res = await axios.put(`https://univora-backend-production.up.railway.app/api/admin/users/${user.id}/status`, { status: newStatus });
       if (res.data.success) { alert(res.data.message); fetchAll(); }
       else alert(res.data.message);
     } catch (err) { alert(err.response?.data?.message || 'Gagal mengubah status user.'); }
@@ -681,7 +681,7 @@ export default function AdminDashboard() {
       onConfirm: async () => {
         setConfirmModal(null);
         try {
-          const res = await axios.put(`http://localhost:5000/api/admin/users/${user.id}/reset`);
+          const res = await axios.put(`https://univora-backend-production.up.railway.app/api/admin/users/${user.id}/reset`);
           if (res.data.success) { alert(res.data.message); fetchAll(); }
           else alert(res.data.message);
         } catch (err) { alert(err.response?.data?.message || 'Gagal mereset kontribusi.'); }
@@ -696,7 +696,7 @@ export default function AdminDashboard() {
       onConfirm: async () => {
         setConfirmModal(null);
         try {
-          const res = await axios.delete(`http://localhost:5000/api/admin/users/${user.id}`);
+          const res = await axios.delete(`https://univora-backend-production.up.railway.app/api/admin/users/${user.id}`);
           if (res.data.success) { alert(res.data.message); fetchAll(); }
           else alert(res.data.message);
         } catch (err) { alert(err.response?.data?.message || 'Gagal menghapus user.'); }

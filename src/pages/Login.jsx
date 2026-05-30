@@ -15,7 +15,7 @@ export default function Login() {
   const handleLogin = async (e) => {
   e.preventDefault();
   try {
-    const response = await axios.post('http://localhost:5000/api/auth/login', {
+    const response = await axios.post('https://univora-backend-production.up.railway.app/api/auth/login', {
       email: email,
       password: password
     });

@@ -30,8 +30,8 @@ export default function GalleryDetail() {
     setLoading(true);
     try {
       const [resFoto, resDetail] = await Promise.all([
-        axios.get(`http://localhost:5000/api/places/${placeId}/photos`),
-        axios.get(`http://localhost:5000/api/places/${placeId}`),
+        axios.get(`https://univora-backend-production.up.railway.app/api/places/${placeId}/photos`),
+        axios.get(`https://univora-backend-production.up.railway.app/api/places/${placeId}`),
       ]);
       if (resFoto.data.success)   setFotoData(resFoto.data.data);
       if (resDetail.data.success) setNamaWarung(resDetail.data.data.nama || '');
@@ -62,7 +62,7 @@ export default function GalleryDetail() {
     fd.append('tipe',    uploadTipe);
     fd.append('user_id', user?.id ?? 1);
     try {
-      const res = await axios.post(`http://localhost:5000/api/places/${placeId}/photos`, fd);
+      const res = await axios.post(`https://univora-backend-production.up.railway.app/api/places/${placeId}/photos`, fd);
       if (res.data.success) {
         alert(res.data.message);
         setShowUpload(false); setUploadFiles([]); setUploadPreviews([]);

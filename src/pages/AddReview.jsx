@@ -25,7 +25,7 @@ export default function AddReview() {
     setMessage('');
 
     try {
-      const response = await axios.post('http://localhost:5000/api/reviews', {
+      const response = await axios.post('https://univora-backend-production.up.railway.app/api/reviews', {
         tempat_makan_id: placeId,
         user_id: user?.id,  // ← pakai user yang sedang login
         rating: rating,

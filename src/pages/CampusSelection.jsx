@@ -19,7 +19,7 @@ export default function CampusSelection() {
   useEffect(() => {
     const fetchCities = async () => {
       try {
-        const res = await axios.get('http://localhost:5000/api/cities');
+        const res = await axios.get('https://univora-backend-production.up.railway.app/api/cities');
         if (res.data.success && res.data.data.length > 0) {
           setCities(res.data.data);
 
@@ -56,7 +56,7 @@ export default function CampusSelection() {
       setSelectedCampus(null);
       setSearchQuery('');
       try {
-        const res = await axios.get(`http://localhost:5000/api/campus/by-city?city_id=${selectedCityId}`);
+        const res = await axios.get(`https://univora-backend-production.up.railway.app/api/campus/by-city?city_id=${selectedCityId}`);
         if (res.data.success) {
           setCampusList(res.data.data);
         }

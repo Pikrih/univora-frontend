@@ -13,7 +13,7 @@ export default function Register() {
     e.preventDefault();
     try {
       // 2. Tembak API Backend Node.js port 5000 kamu
-      const response = await axios.post('http://localhost:5000/api/auth/register', {
+      const response = await axios.post('https://univora-backend-production.up.railway.app/api/auth/register', {
         nama_lengkap: namaLengkap,
         email: email,
         password: password

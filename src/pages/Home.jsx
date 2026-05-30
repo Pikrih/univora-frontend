@@ -76,7 +76,7 @@ export default function Home() {
   const [userLocation, setUserLocation] = useState(null); // { lat, lng }
 
   useEffect(() => {
-    axios.get('http://localhost:5000/api/kategori')
+    axios.get('https://univora-backend-production.up.railway.app/api/kategori')
       .then(res => { if (res.data.success) setMasterKategori(res.data.data); })
       .catch(() => {});
   }, []);
@@ -94,7 +94,7 @@ export default function Home() {
     const universityId = localStorage.getItem('selected_university_id');
     if (!universityId) return;
 
-    let url = `http://localhost:5000/api/places?university_id=${universityId}`;
+    let url = `https://univora-backend-production.up.railway.app/api/places?university_id=${universityId}`;
     if (currentCategory && currentCategory !== 'Semua Kategori') {
       url += `&category=${encodeURIComponent(currentCategory)}`;
     }
@@ -117,7 +117,7 @@ export default function Home() {
   const fetchFavoritIds = useCallback(async () => {
     if (!user?.id) return;
     try {
-      const res = await axios.get(`http://localhost:5000/api/favorites?user_id=${user.id}`);
+      const res = await axios.get(`https://univora-backend-production.up.railway.app/api/favorites?user_id=${user.id}`);
       if (res.data.success) setFavoritIds(new Set(res.data.data.map(f => f.id)));
     } catch { /* silent */ }
   }, [user?.id]);
@@ -129,7 +129,7 @@ export default function Home() {
     if (!user?.id) { navigate('/login'); return; }
     setFavTogglingId(placeId);
     try {
-      const res = await axios.post('http://localhost:5000/api/favorites/toggle', { user_id: user.id, tempat_makan_id: placeId });
+      const res = await axios.post('https://univora-backend-production.up.railway.app/api/favorites/toggle', { user_id: user.id, tempat_makan_id: placeId });
       if (res.data.success) {
         setFavoritIds(prev => {
           const next = new Set(prev);

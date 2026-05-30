@@ -10,7 +10,7 @@ export default function CitySelection() {
   useEffect(() => {
     const fetchCities = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/api/cities');
+        const response = await axios.get('https://univora-backend-production.up.railway.app/api/cities');
         if (response.data.success) {
           setCities(response.data.data);
         }

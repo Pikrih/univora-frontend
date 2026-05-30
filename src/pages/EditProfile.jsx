@@ -53,7 +53,7 @@ export default function EditProfile() {
         const formData = new FormData();
         formData.append('foto', avatarFile);
         const uploadRes = await axios.post(
-          `http://localhost:5000/api/users/${storedUser.id}/avatar`,
+          `https://univora-backend-production.up.railway.app/api/users/${storedUser.id}/avatar`,
           formData,
           { headers: { 'Content-Type': 'multipart/form-data' } }
         );
@@ -71,7 +71,7 @@ export default function EditProfile() {
       }
 
       // 2. Update nama & nomor telepon
-      const updateRes = await axios.put(`http://localhost:5000/api/users/${storedUser.id}`, {
+      const updateRes = await axios.put(`https://univora-backend-production.up.railway.app/api/users/${storedUser.id}`, {
         nama_lengkap:  name.trim(),
         nomor_telepon: phone.trim() || null,
       });

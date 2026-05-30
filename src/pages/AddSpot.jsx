@@ -22,7 +22,7 @@ export default function AddSpot() {
   const [isSubmitting, setIsSubmitting]         = useState(false);
 
   useEffect(() => {
-    axios.get('http://localhost:5000/api/kategori')
+    axios.get('https://univora-backend-production.up.railway.app/api/kategori')
       .then(res => { if (res.data.success) setMasterKategori(res.data.data); })
       .catch(() => {});
   }, []);
@@ -90,7 +90,7 @@ export default function AddSpot() {
     galeriFiles.forEach(f => fd.append('galeri', f));
 
     try {
-      const res = await axios.post('http://localhost:5000/api/places', fd);
+      const res = await axios.post('https://univora-backend-production.up.railway.app/api/places', fd);
       if (res.data.success) { alert('Rekomendasi tempat makan berhasil terkirim! ✨'); navigate('/home'); }
     } catch (err) {
       alert('Gagal: ' + (err.response?.data?.message || 'Terjadi kesalahan jaringan.'));

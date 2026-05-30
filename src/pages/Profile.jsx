@@ -15,7 +15,7 @@ export default function Profile() {
   // Fetch data terbaru dari server setiap kali halaman dibuka
   useEffect(() => {
     if (!user?.id) { setLoading(false); return; }
-    axios.get(`http://localhost:5000/api/users/${user.id}`)
+    axios.get(`https://univora-backend-production.up.railway.app/api/users/${user.id}`)
       .then(res => {
         if (res.data.success) {
           const fresh = res.data.data;
