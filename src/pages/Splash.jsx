@@ -5,20 +5,24 @@ export default function Splash() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Set timer selama 3000 ms (3 detik)
     const timer = setTimeout(() => {
-      navigate('/login'); // Pindah otomatis ke halaman /login
+      navigate('/login');
     }, 3000);
-
-    return () => clearTimeout(timer); // Membersihkan timer jika komponen ditutup
+    return () => clearTimeout(timer);
   }, [navigate]);
 
   return (
-    <div className="flex h-screen w-full flex-col items-center justify-center bg-gray-50">
-      <h1 className="animate-pulse text-5xl font-extrabold tracking-wider text-orange-500">
-        UNIVORA
-      </h1>
-      <p className="mt-2 text-gray-500 text-sm tracking-wide">Rekomendasi Kuliner Mahasiswa</p>
+    <div className="flex h-screen w-full flex-col items-center justify-center bg-white">
+      <div className="w-64 max-w-[75%] animate-pulse">
+        <img
+          src="/logo_univora.png"
+          alt="Univora"
+          className="w-full h-auto object-contain"
+        />
+      </div>
+      <p className="mt-6 text-gray-400 text-xs font-bold tracking-widest uppercase">
+        Rekomendasi Kuliner Mahasiswa
+      </p>
     </div>
   );
 }
