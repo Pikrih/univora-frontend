@@ -10,7 +10,7 @@ const haversine = (lat1, lng1, lat2, lng2) => {
   const dLat = (lat2 - lat1) * Math.PI / 180;
   const dLng = (lng2 - lng1) * Math.PI / 180;
   const a = Math.sin(dLat/2)**2 + Math.cos(lat1*Math.PI/180)*Math.cos(lat2*Math.PI/180)*Math.sin(dLng/2)**2;
-  return (R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a))).toFixed(1);
+  return parseFloat((R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a))).toFixed(1));
 };
 
 // ── Helper: format jam "08:00" → "08.00" (lebih rapi untuk display) ──
@@ -28,9 +28,11 @@ const hitungJarak = (lat1, lon1, lat2, lon2) => {
 
 // ── Helper: format jarak ke label singkat ──
 const formatJarak = (km) => {
-  if (km === null) return null;
-  if (km < 1) return `${Math.round(km * 1000)} m`;
-  return `${km.toFixed(1)} km`;
+  if (km === null || km === undefined) return null;
+  const n = parseFloat(km);
+  if (isNaN(n)) return null;
+  if (n < 1) return `${Math.round(n * 1000)} m`;
+  return `${n.toFixed(1)} km`;
 };
 
 // ── Helper: hitung status buka/tutup dari jam di sisi klien ──
@@ -88,6 +90,12 @@ export default function Home() {
       (pos) => setUserLocation({ lat: pos.coords.latitude, lng: pos.coords.longitude }),
       () => {} // silent jika ditolak
     );
+  }, []);
+
+  // Guard: kalau belum pilih kampus, redirect
+  useEffect(() => {
+    const universityId = localStorage.getItem('selected_university_id');
+    if (!universityId) { navigate('/select-campus'); }
   }, []);
 
   const fetchPlacesData = useCallback(async (currentSearch, currentCategory) => {
@@ -156,7 +164,7 @@ export default function Home() {
   const categories = ['Semua Kategori', ...masterKategori.map(k => k.nama)];
 
   // ── Sort & hitung jarak berdasarkan activeFilter ──────────────────────────
-  const sortedKuliner = [...dataKuliner].map(spot => {
+  const sortedKuliner = (() => { try { return [...dataKuliner].map(spot => {
     const km = userLocation && spot.latitude && spot.longitude
       ? haversine(userLocation.lat, userLocation.lng, spot.latitude, spot.longitude)
       : null;
@@ -174,7 +182,7 @@ export default function Home() {
       if (b.jarak_km !== null) return 1;
     }
     return 0; // null = urutan dari backend (terbaru)
-  });
+  }); } catch(e) { console.error('Sort error:', e); return dataKuliner; } })();
 
   return (
     <div className="w-full max-w-md mx-auto min-h-screen bg-[#F8FAFC] font-sans antialiased relative pb-24">
